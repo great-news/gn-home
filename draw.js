@@ -252,6 +252,15 @@ class DrawingApp {
             const wasMobile = this.isMobile;
             this.checkMobileBreakpoint();
             
+            // Save the current canvas content before resizing
+            const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+            
+            // Update canvas dimensions to match new display size
+            this.setupCanvas();
+            
+            // Restore the drawing content
+            this.ctx.putImageData(imageData, 0, 0);
+            
             // If we just switched to mobile, auto-select move tool
             if (this.isMobile && !wasMobile) {
                 this.setMoveToolAsDefault();
