@@ -2,7 +2,7 @@ console.log("Form.js loaded");
 
 // Auto-response system (global scope)
 let responseCounter = 0;
-const responses = ["firsts", "ey bybble", "we will be in touch"];
+const responses = ["What'd you wanna talk about? More about our services in what-u-do.txt.", "Great, what's your email?", "We'll be in touch soon."];
 let spawnNewBubbleFunction = null; // Will be set when physics initializes
 
 function scheduleAutoResponse() {
