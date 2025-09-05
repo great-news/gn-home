@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             openFolder.style.left = savedState.left;
             openFolder.style.top = savedState.top;
         } else {
-            console.log('First time opening, setting random size and position');
+            console.log('First time opening, setting random size and positio with ratio');
             // First time opening - set random width and calculate height based on image aspect ratio
             const folderImg = openFolder.querySelector('.folder-img');
             let aspectRatio = 1; // default fallback
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const maxWidthVw = Math.min(window.innerWidth * 0.7, 450); // Max 70vw or 450px, whichever is smaller
             const minWidth = Math.min(300, maxWidthVw * 0.67); // Ensure min width doesn't exceed reasonable bounds
             const randomWidth = Math.random() * (maxWidthVw - minWidth) + minWidth;
-            const calculatedHeight = randomWidth / aspectRatio;
+            const calculatedHeight = randomsidth / aspectRatio;
             
             openFolder.style.width = `${randomWidth}px`;
             openFolder.style.height = `${calculatedHeight}px`;
