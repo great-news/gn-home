@@ -118,12 +118,24 @@ document.addEventListener('DOMContentLoaded', function() {
             const folderImg = openFolder.querySelector('.folder-img');
             let aspectRatio = 1; // default fallback
             
-            if (folderImg && folderImg.naturalWidth && folderImg.naturalHeight) {
-                aspectRatio = folderImg.naturalWidth / folderImg.naturalHeight;
+            // Better Safari compatibility for getting aspect ratio
+            if (folderImg) {
+                if (folderImg.complete && folderImg.naturalWidth && folderImg.naturalHeight) {
+                    // Image is loaded and has dimensions
+                    aspectRatio = folderImg.naturalWidth / folderImg.naturalHeight;
+                } else if (folderImg.width && folderImg.height) {
+                    // Fallback to current dimensions if natural dimensions aren't available
+                    aspectRatio = folderImg.width / folderImg.height;
+                } else if (folderImg.getAttribute('width') && folderImg.getAttribute('height')) {
+                    // Fallback to attribute dimensions
+                    aspectRatio = parseInt(folderImg.getAttribute('width')) / parseInt(folderImg.getAttribute('height'));
+                }
             }
             
-            // Set random width between 300-450px
-            const randomWidth = Math.random() * 150 + 300; // 300 to 450
+            // Set random width with max 70vw constraint
+            const maxWidthVw = Math.min(window.innerWidth * 0.7, 450); // Max 70vw or 450px, whichever is smaller
+            const minWidth = Math.min(300, maxWidthVw * 0.67); // Ensure min width doesn't exceed reasonable bounds
+            const randomWidth = Math.random() * (maxWidthVw - minWidth) + minWidth;
             const calculatedHeight = randomWidth / aspectRatio;
             
             openFolder.style.width = `${randomWidth}px`;
