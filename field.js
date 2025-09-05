@@ -85,6 +85,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Function to close all open folders
+    function closeAllOpenFolders() {
+        console.log('Closing all open folders');
+        openFolders.forEach(openFolder => {
+            // Check if folder is currently open
+            if (isFolderOpen(openFolder)) {
+                closeOpenFolder(openFolder);
+            }
+        });
+    }
+    
     // Function to check if folder is already open
     function isFolderOpen(openFolder) {
         const isDisplayed = openFolder.style.display !== 'none';
@@ -136,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const maxWidthVw = Math.min(window.innerWidth * 0.7, 450); // Max 70vw or 450px, whichever is smaller
             const minWidth = Math.min(300, maxWidthVw * 0.67); // Ensure min width doesn't exceed reasonable bounds
             const randomWidth = Math.random() * (maxWidthVw - minWidth) + minWidth;
-            const calculatedHeight = randomsidth / aspectRatio;
+            const calculatedHeight = randomWidth / aspectRatio;
             
             openFolder.style.width = `${randomWidth}px`;
             openFolder.style.height = `${calculatedHeight}px`;
@@ -454,5 +465,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeOpenFolder(openFolder);
             });
         });
+    });
+    
+    // Add event listeners for external elements that should close all folders
+    // These elements may be added dynamically, so we use event delegation
+    document.addEventListener('click', function(e) {
+        // Check if clicked element is a .close-button
+        if (e.target.matches('.close-button') || e.target.closest('.close-button')) {
+            console.log('Close button clicked - closing all folders');
+            closeAllOpenFolders();
+        }
+        
+        // Check if clicked element is .send-input-suc.success
+        if (e.target.matches('.send-input-suc.success') || e.target.closest('.send-input-suc.success')) {
+            console.log('Send input success clicked - closing all folders');
+            closeAllOpenFolders();
+        }
     });
 });
